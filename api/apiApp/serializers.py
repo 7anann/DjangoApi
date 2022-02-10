@@ -4,7 +4,8 @@ from .models import *
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
-        def create(self, validated_data):
+        
+    def create(self, validated_data):
         user = myuser.objects.create(
             Email=validated_data['Email'],
             password=validated_data['password'],
