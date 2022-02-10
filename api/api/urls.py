@@ -21,6 +21,8 @@ from apiApp import views
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'projects', views.ProjectViewSet)
+router.register(r'categories', views.CategoryViewSet)
+router.register(r'tags', views.TagViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

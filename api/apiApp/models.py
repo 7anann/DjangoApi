@@ -1,14 +1,18 @@
 from django.db import models
+from datetime import datetime
 
 # Create your models here.
+
+
 class myuser(models.Model):
-    first_name=models.CharField(max_length=30)
-    last_name=models.CharField(max_length=30)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
     Email = models.EmailField(max_length=30, unique=True)
-    password=models.CharField(max_length=20)
-    confirm_password=models.CharField(max_length=20, null=True)
+    password = models.CharField(max_length=20)
+    confirm_password = models.CharField(max_length=20, null=True)
     phone_number = models.CharField(max_length=11)
-    profile_picture = models.ImageField(upload_to='images/', default='images/images.jpeg')
+    profile_picture = models.ImageField(
+        upload_to='images/', default='images/images.jpeg')
     is_active = models.BooleanField(default=False)
     country = models.CharField(max_length=20, null=True)
     birthdate = models.DateField(null=True)
@@ -37,6 +41,7 @@ class ProjectTage(models.Model):
     def __str__(self):
         return self.tage
 
+
 class Project(models.Model):
     title = models.CharField(max_length=100)
     details = models.TextField()
@@ -48,4 +53,22 @@ class Project(models.Model):
     user = models.ForeignKey(myuser, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    image=models.ImageField(upload_to='images/',default='None/no-img.jpg')
+    image = models.ImageField(upload_to='images/', default='None/no-img.jpg')
+
+    def getTages(self):
+        return self.tags.all()
+
+    def get_date(self):
+        time = datetime.now()
+        if self.created_at.day == time.day:
+            return str(time.hour - self.created_at.hour) + " hours ago"
+        if self.created_at.month == time.month:
+            return str(time.day - self.created_at.day) + " days ago"
+        else:
+            if self.created_at.year == time.year:
+                return str(time.month - self.created_at.month) + " months ago"
+
+        return self.created_at
+
+    def __str__(self):
+        return self.title
