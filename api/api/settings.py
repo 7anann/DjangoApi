@@ -77,14 +77,14 @@ WSGI_APPLICATION = 'api.wsgi.application'
 
 DATABASES = {
 'default': {
+    
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
 
-        'ENGINE': 'django.db.backends.postgresql',
-
-        'NAME': 'funding',
-
-        'USER': 'postgres',
-
-        'PASSWORD': 'pass123',
+        'NAME':'crowd_funding_test2',
+        
+        'USER': 'esraa',
+        
+        'PASSWORD': 'esraa2171995',
 
         'HOST': 'localhost',
 
