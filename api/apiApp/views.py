@@ -1,14 +1,29 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from rest_framework.response import Response
 from .models import *
 from rest_framework import viewsets
 from .serializers import *
+from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
+from rest_framework.views import APIView
 # Create your views here.
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = myuser.objects.all()
     serializer_class = UserSerializer
     #permission_classes = [permissions.IsAuthenticated]
+    
+    
+class loginView(APIView):
+    serializer_class = Login
+
+    def post(self, request, *args, **kwargs):
+        data = request.data
+        serializer = Login(data=data)
+        if serializer.is_valid(raise_exception=True):
+            new_data = serializer.data
+            return Response(new_data, status=HTTP_200_OK)
+        return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
 
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
