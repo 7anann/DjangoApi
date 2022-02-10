@@ -16,3 +16,36 @@ class myuser(models.Model):
 
     def __str__(self):
         return self.Email
+
+
+class Categories(models.Model):
+    name = models.CharField(max_length=100)
+
+    def project(self):
+        return self.project_set.all()
+
+    def __str__(self):
+        return self.name
+
+
+class ProjectTage(models.Model):
+    tage = models.CharField(max_length=100, unique=True)
+
+    def project_all(self):
+        return self.project_set.all()
+
+    def __str__(self):
+        return self.tage
+
+class Project(models.Model):
+    title = models.CharField(max_length=100)
+    details = models.TextField()
+    category = models.ForeignKey(Categories, on_delete=models.CASCADE)
+    totalTarget = models.IntegerField()
+    tags = models.ManyToManyField(ProjectTage, null=True, blank=True)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    user = models.ForeignKey(myuser, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    image=models.ImageField(upload_to='images/',default='None/no-img.jpg')
