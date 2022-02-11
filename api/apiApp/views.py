@@ -44,6 +44,10 @@ class ProjectViewSet(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         kwargs['partial'] = True
         return super().update(request, *args, **kwargs)   
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.delete()
+        return Response({"message":"deleted successfully"})
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
